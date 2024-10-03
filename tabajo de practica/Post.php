@@ -9,46 +9,38 @@
 
 <?php
 
-        $cookies_tiempo = time() +(86400 *1);
+$cookies_tiempo = time() + (86400 * 1);
 
-        $posts = [];
+$posts = [];
 
-        if (isset($_COOKIE['posts'])){
-            $posts = json_decode($_COOKIE ['posts'], true);
+if (isset($_COOKIE['posts'])) {
+    $posts = json_decode($_COOKIE['posts'], true);
+}
 
-        }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['titulo']) && isset($_POST['descripcion'])) {
+        $titulo = htmlspecialchars($_POST['titulo']);
+        $descripcion = htmlspecialchars($_POST['descripcion']);
+        
+        $posts[] = [
+            'titulo' => $titulo,
+            'descripcion' => $descripcion
+        ];
 
-        if ( $_SERVER["REQUEST_METHOD"] == "POST") {
-        /*$titulo = $_POST["titulo"];
-        $descripcion = $_POST["descripcion"]; */
+        // Usar json_encode() para establecer la cookie
+        setcookie('posts', json_encode($posts), $cookies_tiempo);
+    }
+}
+?>
 
-            if (isset($_POST ['titulo']) && isset ($_POST ['descripcion']) ){
-                $titulo = htmlspecialchars ($_POST['titulo']);
-                $descripcion= htmlspecialchars ($_POST['descripcion']);
-            
-            
-                $posts[] = [
-                    'titulo' => $titulo,
-                    'descripcion' => $descripcion
-                ];
-
-                setcookie('posts', json_decode($posts), $cookies_tiempo );
-            }
-
-        }
-
-
-    ?> 
-<?php
-    if (!empty($posts)): ?>
-
+<?php if (!empty($posts)): ?>
     <h2>Post Enviado</h2>
-    <?php foreach ($posts as $post):?>
-        <p> <strong> titulo: </strong> <?php ['titulo']; ?> </P>
-        <p> <strong> descripcion: </strong> <?php ['descripcion']; ?> </P>
+    <?php foreach ($posts as $post): ?>
+        <p><strong>Título:</strong> <?php echo $post['titulo']; ?></p>
+        <p><strong>Descripción:</strong> <?php echo $post['descripcion']; ?></p>
         <hr>
-        <?php endforeach; ?>
-    <?php endif;?>    
+    <?php endforeach; ?>
+<?php endif; ?>    
 
 
 
