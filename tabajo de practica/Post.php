@@ -32,7 +32,7 @@
                     'descripcion' => $descripcion
                 ];
 
-                setcookie('posts', json_decode($posts), $cookies_tiempo, "/");
+                setcookie('posts', json_decode($posts), $cookies_tiempo );
             }
 
         }
