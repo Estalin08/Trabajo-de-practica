@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'descripcion' => $descripcion
         ];
 
-        // Usar json_encode() para establecer la cookie
+        
         setcookie('posts', json_encode($posts), $cookies_tiempo);
     }
 }
